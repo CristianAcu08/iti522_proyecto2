@@ -1,0 +1,51 @@
+#!/bin/bash
+# Script para desplegar el frontend en Azure Static Web Apps
+# Requisitos: Azure CLI instalado y autenticado
+# Variables:
+#   RESOURCE_GROUP: grupo de recursos (puede ser el mismo que el backend)
+#   STATIC_APP_NAME: nombre único para la Static Web App
+#   LOCATION: región
+#   APP_LOCATION: ubicación de la aplicación dentro del repo (app/frontend)
+#   API_URL: URL del backend (para configurar si se necesita)
+
+set -euo pipefail
+
+echo "=== Despliegue de Frontend en Azure Static Web Apps ==="
+
+# Configuración
+RESOURCE_GROUP="${RESOURCE_GROUP:-tiendacomputo-rg}"
+STATIC_APP_NAME="${STATIC_APP_NAME:-tiendacomputo-frontend}"
+LOCATION="${LOCATION:-eastus}"
+APP_LOCATION="${APP_LOCATION:-app/frontend}"
+API_URL="${API_URL:-}"  # Si se conoce, se puede pasar como variable
+
+# 1. Crear grupo de recursos si no existe (si no se creó ya)
+echo "Asegurando grupo de recursos: $RESOURCE_GROUP"
+az group create --name "$RESOURCE_GROUP" --location "$LOCATION" --output none
+
+# 2. Crear Static Web Appecho "Creando Static Web App: $STATIC_APP_NAMaz staticwebapp create   --name "t
+
+# 3. (Opcional) Vincular con una API de Azure Functions o App Service
+#    Si se tiene una API separada, se puede crear un enlace.
+#    Para este proyecto, asumimos que el backend está en otro App Service.
+#    Si se desea, se puede crear un enlace usando:
+#    az staticwebapp update --name $STATIC_APP_NAME --resource-group $RESOURCE_GROUP #      --api-location "api" --app-location "$APP_LOCATION" #    Pero como nuestro backend está en otro App Service, no lo hacemos aquí.
+#    En su lugar, documentamos que el frontend debe consumir la API del backend.
+
+# 4. Obtener la URL de la Static Web App
+STATIC_URL=$(az staticwebapp show   --name "$STATIC_APP_NAME"   --resource-group "$RESOURCE_GROUP"   --query defaultHostname   --output tsv)
+
+echo "=== Despliegue completado ==="
+echo "Grupo de recursos: $RESOURCE_GROUP"
+echo "Static Web App: $STATIC_APP_NAME"
+echo "URL de la aplicación: https://$STATIC_URL"
+echo ""
+echo "Notas:"
+echo "  - El frontend está desplegado y servirá los archivos estáticos."
+echo "  - Asegúrese de que el frontend esté configurado para consumir la API del backend."
+echo "    Si el backend está en otro App Service, actualice la constante API_BASE_URL en app.js"
+echo "    o use un proxy en la Static Web App (requiere configuración de routes en staticwebapp.config.json)."
+echo ""
+echo "  - Para pruebas locales, puede ejecutar un servidor simple en la carpeta app/frontend:"
+echo "      npx serve -s app/frontend -l 3000"
+echo "    y apuntar a su backend (local o en la nube)."
