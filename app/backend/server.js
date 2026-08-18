@@ -36,7 +36,7 @@ pool.query('SELECT NOW()', (err, res) => {
 // GET /api/articulos - Listar todos los artículos
 app.get('/api/articulos', async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM articulos ORDER BY id');
+    const result = await pool.query('SELECT id, name, description, price, stock FROM articulos ORDER BY id');
     res.json(result.rows);
   } catch (error) {
     console.error('Error al obtener artículos:', error);
@@ -48,7 +48,7 @@ app.get('/api/articulos', async (req, res) => {
 app.get('/api/articulos/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query('SELECT * FROM articulos WHERE id = $1', [id]);
+    const result = await pool.query('SELECT id, name, description, price, stock FROM articulos WHERE id = $1', [id]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Artículo no encontrado' });
@@ -77,7 +77,7 @@ app.post('/api/articulos', async (req, res) => {
     const { nombre, descripcion, precio, stock } = normalizarArticulo(req.body);
     
     const result = await pool.query(
-      'INSERT INTO articulos (nombre, descripcion, precio, stock) VALUES ($1, $2, $3, $4) RETURNING *',
+      'INSERT INTO articulos (name, description, price, stock) VALUES ($1, $2, $3, $4) RETURNING id, name, description, price, stock',
       [nombre, descripcion, precio, stock]
     );
     
@@ -108,7 +108,7 @@ app.post('/api/restore', async (req, res) => {
 app.delete('/api/articulos/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const result = await pool.query('DELETE FROM articulos WHERE id = $1 RETURNING *', [id]);
+    const result = await pool.query('DELETE FROM articulos WHERE id = $1 RETURNING id, name, description, price, stock', [id]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Artículo no encontrado' });
