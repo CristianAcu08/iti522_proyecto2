@@ -16,7 +16,10 @@
         <main>
             <section class="header-actions">
                 <h2>Catálogo de Productos</h2>
-                <button id="addProductBtn" class="btn-primary">➕ Nuevo Producto</button>
+                <div style="display: flex; gap: 10px;">
+                    <button id="addProductBtn" class="btn btn-primary" style="background: linear-gradient(135deg, #34d399 0%, #10b981 100%); color: white; padding: 0.8rem 1.6rem; font-size: 1rem; border-radius: 12px; border: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); cursor: pointer; transition: all 0.3s ease;">➕ Nuevo Producto</button>
+                    <!-- <button id="restoreBtn" class="btn btn-danger">🔄 Restaurar BD</button> -->
+                </div>
             </section>
 
             <!-- Lista de productos -->
@@ -47,8 +50,8 @@
                             <input type="number" id="productStock" min="0" required>
                         </div>
                         <div class="form-actions">
-                            <button type="button" id="cancelBtn" class="btn-secondary">Cancelar</button>
-                            <button type="submit" id="saveBtn" class="btn-primary">Guardar</button>
+                            <button type="button" id="cancelBtn" class="btn btn-secondary">Cancelar</button>
+                            <button type="submit" id="saveBtn" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
                 </div>
@@ -61,8 +64,8 @@
                     <h2>Confirmar Eliminación</h2>
                     <p id="deleteMessage">¿Está seguro de que desea eliminar este producto?</p>
                     <div class="form-actions">
-                        <button type="button" id="cancelDeleteBtn" class="btn-secondary">Cancelar</button>
-                        <button type="button" id="confirmDeleteBtn" class="btn-danger">Eliminar</button>
+                        <button type="button" id="cancelDeleteBtn" class="btn btn-secondary">Cancelar</button>
+                        <button type="button" id="confirmDeleteBtn" class="btn btn-danger" data-id="7">Eliminar</button>
                     </div>
                 </div>
             </div>

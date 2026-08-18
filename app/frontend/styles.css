@@ -6,10 +6,10 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background-color: #f8f9fa;
+    color: #1f2937;
+    background-color: #f3f4f6;
 }
 
 /* Contenedor principal */
@@ -21,23 +21,26 @@ body {
 
 /* Header */
 header {
-    background: linear-gradient(135deg, #0066cc 0%, #004c99 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
     color: white;
-    padding: 2rem;
+    padding: 3rem 2rem;
     text-align: center;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.75rem;
+    margin-bottom: 0.75rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
 }
 
 header p {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     opacity: 0.9;
+    font-weight: 500;
 }
 
 /* Acciones de encabezado */
@@ -55,46 +58,66 @@ header p {
 }
 
 /* Botones */
+/* Botones Modernos con Estilo Glass/Gradient */
 .btn {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.4rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    border: none;
-    border-radius: 4px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    text-decoration: none;
-    text-align: center;
+    transition: all 0.3s ease;
+    border: none;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.btn-primary {
-    background: #0066cc;
+/* Primario (Guardar) */
+.btn-primary, #saveBtn {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
     color: white;
 }
-
-.btn-primary:hover {
-    background: #004c99;
+.btn-primary:hover, #saveBtn:hover {
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
+/* Secundario (Cancelar/Editar) */
 .btn-secondary {
-    background: #6c757d;
-    color: white;
+    background: white;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
 }
-
 .btn-secondary:hover {
-    background: #5a6268;
+    background: #f9fafb;
+    border-color: #d1d5db;
+    color: #111827;
 }
 
+/* Peligro (Eliminar) */
 .btn-danger {
-    background: #dc3545;
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
     color: white;
 }
-
 .btn-danger:hover {
-    background: #c82333;
+    box-shadow: 0 10px 15px -3px rgba(239, 68, 68, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Nuevo Producto (Especial) */
+#addBtn {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+    color: white;
+    font-size: 1rem;
+    padding: 0.8rem 1.6rem;
+}
+#addBtn:hover {
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4);
+    transform: translateY(-2px);
 }
 
 .btn-success {
@@ -116,24 +139,26 @@ header p {
 /* Tarjeta de producto */
 .product-card {
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
     overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
+    border: 1px solid #f3f4f6;
 }
 
 .product-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border-color: #e5e7eb;
 }
 
 .product-image {
     width: 100%;
-    height: 180px;
+    height: 200px;
     object-fit: cover;
-    background-color: #e9ecef;
+    background-color: #f3f4f6;
 }
 
 .product-info {
@@ -141,44 +166,38 @@ header p {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
 
 .product-name {
     font-size: 1.25rem;
-    color: #0066cc;
-    margin-bottom: 0.5rem;
-    flex-grow: 1;
+    color: #111827;
+    font-weight: 700;
+    margin-bottom: 0;
 }
 
 .product-description {
-    color: #666;
-    font-size: 0.9rem;
+    color: #6b7280;
+    font-size: 0.875rem;
     margin-bottom: 1rem;
-    flex-grow: 1;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.product-details {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: auto;
+    line-height: 1.5;
 }
 
 .product-price {
-    font-weight: bold;
-    color: #28a745;
+    font-weight: 800;
+    color: #10b981;
+    font-size: 1.25rem;
 }
 
 .product-stock {
-    background: #e9ecef;
-    padding: 0.25rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.85rem;
+    background: #f3f4f6;
+    padding: 0.375rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #4b5563;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 /* Acciones de la tarjeta */
@@ -226,17 +245,17 @@ header p {
 .modal-content {
     background: white;
     margin: 5% auto;
-    padding: 2rem;
-    border-radius: 8px;
+    padding: 2.5rem;
+    border-radius: 20px;
     width: 90%;
     max-width: 500px;
     position: relative;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    animation: modalFadeIn 0.3s ease;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: modalFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes modalFadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
+    from { opacity: 0; transform: translateY(-30px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -263,32 +282,31 @@ header p {
 }
 
 /* Formulario dentro del modal */
-.form-group {
-    margin-bottom: 1.25rem;
-}
-
 .form-group label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
-    color: #333;
+    color: #374151;
+    font-size: 0.875rem;
 }
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    transition: border-color 0.2s ease;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 0.9375rem;
+    transition: all 0.2s ease;
+    background-color: #f9fafb;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #0066cc;
-    box-shadow: 0 0 0 3px rgba(0,102,204,0.25);
+    border-color: #4f46e5;
+    background-color: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
 }
 
 .form-group textarea {

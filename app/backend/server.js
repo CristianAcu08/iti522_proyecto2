@@ -8,9 +8,9 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*', // En producción, especificar el dominio del frontend
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type']
+  allowedHeaders: '*'
 }));
 app.use(express.json());
 
@@ -61,19 +61,24 @@ app.get('/api/articulos/:id', async (req, res) => {
   }
 });
 
+// Normaliza el cuerpo del request
+function normalizarArticulo(body) {
+  return {
+    nombre: body.nombre || body.name || 'Sin nombre',
+    descripcion: body.descripcion || body.description || '',
+    precio: body.precio !== undefined ? body.precio : (body.price || 0),
+    stock: body.stock !== undefined ? body.stock : 0
+  };
+}
+
 // POST /api/articulos - Crear un nuevo artículo
 app.post('/api/articulos', async (req, res) => {
   try {
-    const { nombre, descripcion, precio, stock } = req.body;
-    
-    // Validación básica
-    if (!nombre || precio === undefined || stock === undefined) {
-      return res.status(400).json({ error: 'Nombre, precio y stock son requeridos' });
-    }
+    const { nombre, descripcion, precio, stock } = normalizarArticulo(req.body);
     
     const result = await pool.query(
       'INSERT INTO articulos (nombre, descripcion, precio, stock) VALUES ($1, $2, $3, $4) RETURNING *',
-      [nombre, descripcion || null, precio, stock]
+      [nombre, descripcion, precio, stock]
     );
     
     res.status(201).json(result.rows[0]);
@@ -83,30 +88,19 @@ app.post('/api/articulos', async (req, res) => {
   }
 });
 
-// PUT /api/articulos/:id - Actualizar un artículo existente
-app.put('/api/articulos/:id', async (req, res) => {
+// Restore endpoint
+app.post('/api/restore', async (req, res) => {
   try {
-    const { id } = req.params;
-    const { nombre, descripcion, precio, stock } = req.body;
+    const { exec } = require('child_process');
+    // Usamos az vm run-command que ya probamos y funciona
+    const cmd = "az vm run-command invoke --resource-group SERVER1 --name server1 --command-id RunShellScript --scripts \"LATEST=$(ls -t /opt/db_backups/*.sql | head -1); PGPASSWORD='12345678' psql -U app_user -h localhost -d inventario_db -f $LATEST\"";
     
-    // Validación básica
-    if (!nombre || precio === undefined || stock === undefined) {
-      return res.status(400).json({ error: 'Nombre, precio y stock son requeridos' });
-    }
-    
-    const result = await pool.query(
-      'UPDATE articulos SET nombre = $1, descripcion = $2, precio = $3, stock = $4 WHERE id = $5 RETURNING *',
-      [nombre, descripcion || null, precio, stock, id]
-    );
-    
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Artículo no encontrado' });
-    }
-    
-    res.json(result.rows[0]);
-  } catch (error) {
-    console.error('Error al actualizar artículo:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    exec(cmd, (err, stdout, stderr) => {
+      if (err) return res.status(500).json({ error: 'Fallo al restaurar', detalles: stderr });
+      res.json({ message: 'Restauración exitosa vía CLI' });
+    });
+  } catch (err) { 
+    res.status(500).json({ error: 'Error interno', detalles: err.message }); 
   }
 });
 
