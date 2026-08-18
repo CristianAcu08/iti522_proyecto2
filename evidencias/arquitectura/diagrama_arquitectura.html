@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagrama de Arquitectura - Proyecto 2 ITI-522</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #020617;
+      --card-bg: #0f172a;
+      --card-border: #1e293b;
+      --text: #e2e8f0;
+      --text-muted: #94a3b8;
+      --cyan: #22d3ee;
+      --emerald: #34d399;
+      --violet: #a78bfa;
+      --amber: #fbbf24;
+      --rose: #fb7185;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      max-width: 1000px;
+      width: 100%;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+    }
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--cyan);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #f8fafc;
+    }
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+    .diagram-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      max-width: 1100px;
+      width: 100%;
+      overflow-x: auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2rem;
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-width: 950px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      width: 100%;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .card-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .card-dot.cyan { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+    .card-dot.emerald { background: var(--emerald); box-shadow: 0 0 6px var(--emerald); }
+    .card-dot.violet { background: var(--violet); box-shadow: 0 0 6px var(--violet); }
+    .card h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #f1f5f9;
+    }
+    .card ul {
+      list-style: none;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .card li { margin-bottom: 0.25rem; }
+    footer {
+      margin-top: 2rem;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="badge">
+      <div class="pulse-dot"></div>
+      ITI-522 · COMPUTACIÓN EN LA NUBE · PROYECTO 2
+    </div>
+    <h1>Arquitectura de la Solución de Inventario</h1>
+    <p class="subtitle">Arquitectura híbrida PaaS/IaaS implementada en Microsoft Azure con respaldo continuo y alta disponibilidad</p>
+  </header>
+
+  <div class="diagram-container">
+    <svg viewBox="0 0 980 540" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Grid -->
+        <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+        </pattern>
+
+        <!-- Markers -->
+        <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#22d3ee"/>
+        </marker>
+        <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#34d399"/>
+        </marker>
+        <marker id="arrow-violet" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#a78bfa"/>
+        </marker>
+        <marker id="arrow-amber" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 1 L 8 5 L 0 9 z" fill="#fbbf24"/>
+        </marker>
+      </defs>
+
+      <!-- Background with grid -->
+      <rect width="100%" height="100%" fill="#020617"/>
+      <rect width="100%" height="100%" fill="url(#grid)"/>
+
+      <!-- ================= BOUNDARIES ================= -->
+      
+      <!-- Azure Cloud Boundary -->
+      <rect x="220" y="30" width="730" height="420" rx="12" fill="rgba(15, 23, 42, 0.4)" stroke="#334155" stroke-width="1.5" stroke-dasharray="8 4"/>
+      <text x="240" y="55" fill="#94a3b8" font-size="11" font-weight="600" letter-spacing="1">MICROSOFT AZURE CLOUD (EAST US)</text>
+
+      <!-- Resource Group: tiendacomputo-rg -->
+      <rect x="240" y="70" width="690" height="360" rx="10" fill="rgba(30, 41, 59, 0.2)" stroke="#475569" stroke-width="1" stroke-dasharray="6 3"/>
+      <text x="255" y="92" fill="#64748b" font-size="10" font-weight="500">Resource Group: tiendacomputo-rg / SERVER1</text>
+
+      <!-- IaaS Sub-boundary (Legal constraint VM) -->
+      <rect x="580" y="115" width="330" height="150" rx="8" fill="rgba(136, 19, 55, 0.15)" stroke="#fb7185" stroke-width="1.2" stroke-dasharray="4 4"/>
+      <text x="595" y="135" fill="#fb7185" font-size="9" font-weight="600">⚖️ RESTRICCIÓN LEGAL: CONTROL ADMINISTRATIVO (IaaS)</text>
+
+      <!-- ================= CONNECTIONS (Behind boxes) ================= -->
+
+      <!-- Client to SWA -->
+      <path d="M 160 210 L 260 210" fill="none" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrow-cyan)"/>
+      <text x="180" y="200" fill="#22d3ee" font-size="8" text-anchor="middle">HTTPS / PWA</text>
+
+      <!-- SWA to App Service API -->
+      <path d="M 390 210 L 440 210" fill="none" stroke="#34d399" stroke-width="2" marker-end="url(#arrow-emerald)"/>
+      <text x="415" y="200" fill="#34d399" font-size="8" text-anchor="middle">REST / JSON</text>
+
+      <!-- App Service API to PostgreSQL VM -->
+      <path d="M 550 210 L 610 210" fill="none" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrow-violet)"/>
+      <text x="580" y="200" fill="#a78bfa" font-size="8" text-anchor="middle">TCP 5432</text>
+
+      <!-- VM to Blob Storage (Cron Backup) -->
+      <path d="M 725 240 L 725 310" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-amber)"/>
+      <text x="735" y="280" fill="#fbbf24" font-size="8">Backup Cron 02:00 AM</text>
+      <text x="735" y="292" fill="#94a3b8" font-size="7">(azcopy / SAS Token)</text>
+
+      <!-- ================= COMPONENTS ================= -->
+
+      <!-- 1. Client / Mobile (External) -->
+      <g id="comp-client">
+        <rect x="30" y="160" width="130" height="100" rx="8" fill="#0f172a"/>
+        <rect x="30" y="160" width="130" height="100" rx="8" fill="rgba(30, 41, 59, 0.6)" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="95" y="190" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">📱 Transportistas</text>
+        <text x="95" y="210" fill="#94a3b8" font-size="9" text-anchor="middle">Navegador Móvil</text>
+        <text x="95" y="225" fill="#64748b" font-size="8" text-anchor="middle">Diseño Responsivo</text>
+        <text x="95" y="242" fill="#22d3ee" font-size="8" text-anchor="middle">Glassmorphism UI</text>
+      </g>
+
+      <!-- 2. Frontend SWA (PaaS) -->
+      <g id="comp-swa">
+        <rect x="260" y="165" width="130" height="90" rx="8" fill="#0f172a"/>
+        <rect x="260" y="165" width="130" height="90" rx="8" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+        <text x="325" y="195" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">Static Web App</text>
+        <text x="325" y="213" fill="#22d3ee" font-size="9" text-anchor="middle">PaaS Frontend</text>
+        <text x="325" y="230" fill="#94a3b8" font-size="8" text-anchor="middle">HTML5 / Vanilla JS</text>
+        <text x="325" y="244" fill="#64748b" font-size="7" text-anchor="middle">SSL/TLS Automático</text>
+      </g>
+
+      <!-- 3. Backend App Service (PaaS) -->
+      <g id="comp-api">
+        <rect x="440" y="165" width="110" height="90" rx="8" fill="#0f172a"/>
+        <rect x="440" y="165" width="110" height="90" rx="8" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+        <text x="495" y="195" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">App Service</text>
+        <text x="495" y="213" fill="#34d399" font-size="9" text-anchor="middle">Node.js API</text>
+        <text x="495" y="230" fill="#94a3b8" font-size="8" text-anchor="middle">Express / REST</text>
+        <text x="495" y="244" fill="#64748b" font-size="7" text-anchor="middle">CRUD /api/articulos</text>
+      </g>
+
+      <!-- 4. Virtual Machine (IaaS) -->
+      <g id="comp-vm">
+        <rect x="610" y="150" width="280" height="100" rx="8" fill="#0f172a"/>
+        <rect x="610" y="150" width="280" height="100" rx="8" fill="rgba(76, 29, 149, 0.3)" stroke="#a78bfa" stroke-width="1.5"/>
+        <text x="750" y="175" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">Linux VM (Ubuntu Server 24.04)</text>
+        <text x="750" y="193" fill="#a78bfa" font-size="9" text-anchor="middle">🐘 PostgreSQL 16 DB Engine</text>
+        <text x="750" y="210" fill="#94a3b8" font-size="8" text-anchor="middle">Base: inventario_db · Usuario: app_user</text>
+        <text x="750" y="225" fill="#fb7185" font-size="8" text-anchor="middle">Hardening SSH / UFW Firewall activo</text>
+        <text x="750" y="239" fill="#64748b" font-size="7" text-anchor="middle">Scripts: install_db.sh / backup_db.sh / restore_db.sh</text>
+      </g>
+
+      <!-- 5. Azure Blob Storage (Disponibilidad / DRP) -->
+      <g id="comp-storage">
+        <rect x="610" y="320" width="280" height="85" rx="8" fill="#0f172a"/>
+        <rect x="610" y="320" width="280" height="85" rx="8" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+        <text x="750" y="348" fill="#f8fafc" font-size="11" font-weight="600" text-anchor="middle">📦 Azure Blob Storage</text>
+        <text x="750" y="366" fill="#fbbf24" font-size="9" text-anchor="middle">Cuenta: tiendacomputostorage</text>
+        <text x="750" y="382" fill="#94a3b8" font-size="8" text-anchor="middle">Contenedor: db-backups (*.sql.gz)</text>
+        <text x="750" y="396" fill="#64748b" font-size="7" text-anchor="middle">Cifrado SSE AES-256 · RPO: 24h · RTO: 45min</text>
+      </g>
+
+      <!-- ================= LEGEND ================= -->
+      <g id="legend" transform="translate(60, 475)">
+        <rect x="0" y="0" width="860" height="45" rx="6" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+        
+        <!-- Frontend -->
+        <rect x="20" y="16" width="12" height="12" rx="2" fill="rgba(8, 51, 68, 0.6)" stroke="#22d3ee" stroke-width="1"/>
+        <text x="38" y="26" fill="#94a3b8" font-size="8">PaaS Frontend</text>
+
+        <!-- Backend -->
+        <rect x="150" y="16" width="12" height="12" rx="2" fill="rgba(6, 78, 59, 0.6)" stroke="#34d399" stroke-width="1"/>
+        <text x="168" y="26" fill="#94a3b8" font-size="8">PaaS API REST</text>
+
+        <!-- Database IaaS -->
+        <rect x="290" y="16" width="12" height="12" rx="2" fill="rgba(76, 29, 149, 0.5)" stroke="#a78bfa" stroke-width="1"/>
+        <text x="308" y="26" fill="#94a3b8" font-size="8">IaaS Motor BD (VM Propia)</text>
+
+        <!-- Storage / Backup -->
+        <rect x="490" y="16" width="12" height="12" rx="2" fill="rgba(120, 53, 15, 0.5)" stroke="#fbbf24" stroke-width="1"/>
+        <text x="508" y="26" fill="#94a3b8" font-size="8">Almacenamiento de Respaldo</text>
+
+        <!-- Restriccion Legal -->
+        <line x1="680" y1="22" x2="700" y2="22" stroke="#fb7185" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <text x="708" y="26" fill="#fb7185" font-size="8">Límite Restricción Legal</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-dot cyan"></div>
+        <h3>Capa de Presentación y Móvil</h3>
+      </div>
+      <ul>
+        <li>• Despliegue en <b>Azure Static Web Apps</b> con SSL global automático.</li>
+        <li>• Diseño responsivo para transportistas en ruta desde smartphones.</li>
+        <li>• Interfaz moderna con estilos Glassmorphism y validación cliente.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-dot emerald"></div>
+        <h3>Capa de Lógica y Procesamiento</h3>
+      </div>
+      <ul>
+        <li>• <b>Azure App Service Linux</b> ejecutando Node.js / Express.</li>
+        <li>• Endpoints CRUD: <code>/api/articulos</code> (GET, POST, PUT, DELETE).</li>
+        <li>• Endpoint de monitoreo de salud: <code>/health</code>.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-dot violet"></div>
+        <h3>Capa de Datos y DRP (Continuidad)</h3>
+      </div>
+      <ul>
+        <li>• <b>PostgreSQL 16 en VM Ubuntu</b> (Cumplimiento de restricción legal).</li>
+        <li>• Respaldo diario automático (Cron 02:00 AM) hacia <b>Blob Storage</b>.</li>
+        <li>• <b>RPO:</b> 24 horas | <b>RTO:</b> 45 minutos | Procedimiento de restore validado.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    ITI-522 Computación en la Nube · II Ciclo 2026 · Universidad Técnica Nacional
+  </footer>
+
+</body>
+</html>
