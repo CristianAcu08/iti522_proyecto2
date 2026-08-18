@@ -104,6 +104,28 @@ app.post('/api/restore', async (req, res) => {
   }
 });
 
+// PUT /api/articulos/:id - Actualizar un artículo
+app.put('/api/articulos/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre, descripcion, precio, stock } = normalizarArticulo(req.body);
+    
+    const result = await pool.query(
+      'UPDATE articulos SET name = $1, description = $2, price = $3, stock = $4 WHERE id = $5 RETURNING id, name, description, price, stock',
+      [nombre, descripcion, precio, stock, id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Artículo no encontrado' });
+    }
+    
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error al actualizar artículo:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 // DELETE /api/articulos/:id - Eliminar un artículo
 app.delete('/api/articulos/:id', async (req, res) => {
   try {
