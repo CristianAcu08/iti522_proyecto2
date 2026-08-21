@@ -77,4 +77,4 @@ Configurado vía `cron` en la VM de base de datos diariamente a las **02:00 AM**
 ---
 
 ## 👥 Integrantes y Roles
-- Estudiantes del curso ITI-522 - Computación en la Nube (UTN).
+- Cristian Gdo. Acuña Rodríguez, Kristel Fiorella Barquero Arias, Kiany Daney Granados Diaz - Estudiantes del curso ITI-522 - Computación en la Nube (UTN).
