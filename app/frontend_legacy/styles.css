@@ -1,0 +1,37 @@
+:root {
+  --bg: #0a0a0a;
+  --gold: #d4af37;
+  --gold-light: #f5d76e;
+  --surface: #171717;
+  --text: #e5e5e5;
+}
+
+body { font-family: 'Inter', sans-serif; background: var(--bg) !important; color: var(--text) !important; margin: 0; padding: 2rem; }
+.container { max-width: 900px; margin: 0 auto; }
+h1 { color: var(--gold); text-align: center; border-bottom: 2px solid var(--gold); padding-bottom: 1rem; }
+
+/* Grid de tarjetas */
+.products-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 2rem; }
+.product-card { background: var(--surface); border: 1px solid var(--gold); padding: 1.5rem; border-radius: 12px; transition: 0.3s; }
+.product-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(212,175,55,0.2); }
+.product-name { color: var(--gold); font-size: 1.2rem; margin-top: 0; }
+
+/* Modal elegante */
+.modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); align-items: center; justify-content: center; }
+.modal.show { display: flex !important; }
+.modal-content { background: #1a1a1a; padding: 2rem; border: 1px solid var(--gold); border-radius: 16px; width: 90%; max-width: 400px; position: relative; }
+
+/* Formulario dentro del modal */
+#productForm { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+input, textarea { width: 100%; padding: 12px; background: #000; border: 1px solid var(--gold); border-radius: 6px; color: white; box-sizing: border-box; }
+.close-btn { position: absolute; top: 10px; right: 15px; cursor: pointer; color: var(--gold); font-weight: bold; }
+
+/* Botones Dorados */
+button { background: var(--gold) !important; color: #000 !important; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+button:hover { background: var(--gold-light) !important; }
+
+/* Colores de accion: editar celeste, eliminar rojo */
+.btn-edit { background: #0ea5e9 !important; color: #fff !important; border: 1px solid #0284c7; }
+.btn-edit:hover { background: #38bdf8 !important; }
+.btn-danger { background: #ef4444 !important; color: #fff !important; border: 1px solid #dc2626; }
+.btn-danger:hover { background: #dc2626 !important; }

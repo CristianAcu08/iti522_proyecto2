@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tienda de Computo</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Tienda de Computo</h1>
+        <button id="addProductBtn">Nuevo Producto</button>
+        <div id="productsList" class="products-list"></div>
+        
+        <div id="productModal" class="modal">
+            <div class="modal-content">
+                <span class="close-btn" onclick="document.getElementById('productModal').classList.remove('show')">X</span>
+                <h2 id="modalTitle">Producto</h2>
+                <form id="productForm">
+                    <input type="text" id="productName" placeholder="Nombre" required>
+                    <textarea id="productDescription" placeholder="Descripción"></textarea>
+                    <input type="number" id="productPrice" placeholder="Precio" required>
+                    <input type="number" id="productStock" placeholder="Stock" required>
+                    <button type="submit">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
