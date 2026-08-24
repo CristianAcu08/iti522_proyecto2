@@ -31,3 +31,13 @@ button {
   border-radius: 8px;
   cursor: pointer;
 }
+
+/* Botones de acción por color */
+button.edit-btn {
+  background: #0ea5e9 !important; /* Celeste para editar */
+}
+
+button.delete-btn,
+button.btn-danger {
+  background: #ef4444 !important; /* Rojo para eliminar */
+}
