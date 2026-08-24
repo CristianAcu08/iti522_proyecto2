@@ -1,0 +1,1 @@
+Este archivo confirma la persistencia de datos en la VM de Azure.
