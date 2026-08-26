@@ -7,8 +7,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>Tienda de Computo</h1>
-        <button id="addProductBtn">Nuevo Producto</button>
+        <header style="background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%); padding: 2rem; border-radius: 12px; margin-bottom: 1.5rem; text-align: center; box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);">
+            <h1 style="margin: 0; color: white; font-size: 2.5rem; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">💻 Tienda de Computo</h1>
+            <p style="margin: 0.5rem 0 0; color: rgba(255,255,255,0.9); font-size: 1.1rem;">Sistema de Gestión de Inventario - ITI-522</p>
+        </header>
+        <div style="display: flex; justify-content: center; margin-bottom: 1.5rem;">
+            <button id="addProductBtn" style="background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%); color: white; padding: 0.8rem 2rem; font-size: 1rem; border-radius: 12px; border: none; box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); cursor: pointer; font-weight: 600; transition: all 0.2s;">➕ Nuevo Producto</button>
+        </div>
         <div id="productsList" class="products-list"></div>
         
         <div id="productModal" class="modal">
